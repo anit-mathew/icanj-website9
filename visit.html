@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Plan a Visit – ICANJ</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* ══ VISIT PAGE STYLES ══ */
+
+/* ── Hero Welcome ── */
+.visit-welcome{background:var(--bg-soft);padding:64px 0 0;}
+.vw-inner{max-width:1200px;margin:0 auto;padding:0 52px;}
+.vw-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding-bottom:64px;}
+.vw-text .eyebrow{margin-bottom:16px;display:block;}
+.vw-title{font-size:clamp(32px,4.5vw,56px);font-weight:800;color:var(--ink);line-height:1.05;letter-spacing:-0.03em;margin-bottom:20px;}
+.vw-body{font-size:17px;color:var(--muted);line-height:1.75;max-width:480px;}
+.vw-video{position:relative;border-radius:16px;overflow:hidden;background:var(--dark);aspect-ratio:16/9;box-shadow:0 24px 64px rgba(0,0,0,0.15);}
+.vw-video-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:linear-gradient(135deg,#2a2a2a 0%,#1a1a1a 100%);}
+.vw-play{width:64px;height:64px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;border:none;}
+.vw-play:hover{transform:scale(1.08);box-shadow:0 0 0 12px rgba(0,197,205,0.15);}
+.vw-play svg{margin-left:4px;}
+.vw-video-label{font-size:13px;font-weight:600;color:rgba(255,255,255,0.5);letter-spacing:0.04em;}
+
+/* ── Toggle ── */
+.toggle-group{display:inline-flex;border:1px solid var(--border-mid);border-radius:8px;overflow:hidden;margin-bottom:40px;}
+.tog-btn{font-family:'Inter',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:11px 28px;background:transparent;border:none;cursor:pointer;color:#888;transition:all 0.2s;}
+.tog-btn.active{background:#1a1a1a;color:#fff;}
+
+/* ── Service Times / Visit Grid ── */
+.visit-panel{display:none;}
+.visit-panel.active{display:block;animation:fadeUp 0.35s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.visit-grid{display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr;border:1px solid var(--border-light);border-radius:14px;overflow:hidden;margin-top:36px;}
+.vg-col{padding:36px 32px;}
+.vg-sep{background:var(--border);}
+.vg-label{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal);margin-bottom:16px;}
+.vg-heading{font-size:clamp(22px,3vw,34px);font-weight:800;color:#1a1a1a;line-height:1.1;letter-spacing:-0.02em;margin-bottom:20px;}
+.svc-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border-light);}
+.svc-row:last-child{border-bottom:none;}
+.svc-name{font-size:15px;font-weight:600;color:#1a1a1a;}
+.svc-time{font-size:13px;font-weight:700;color:var(--teal);}
+.map-placeholder{background:var(--bg-soft);border-radius:12px;height:200px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-light);margin-bottom:16px;overflow:hidden;}
+.map-placeholder iframe{width:100%;height:100%;border:none;}
+.addr-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+.addr-label{font-size:14px;font-weight:600;color:#1a1a1a;}
+.copy-btn{font-size:11px;font-weight:700;letter-spacing:0.08em;padding:5px 12px;border:1px solid var(--border-mid);border-radius:6px;background:transparent;color:#888;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;}
+.copy-btn:hover{border-color:var(--teal);color:var(--teal);}
+.platform-list{margin-top:16px;}
+.platform-row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--border-light);text-decoration:none;}
+.platform-row:last-child{border-bottom:none;}
+.pl-name{font-size:14px;font-weight:600;color:#1a1a1a;}
+.pl-arrow{font-size:16px;color:var(--border-mid);transition:all 0.2s;}
+.platform-row:hover .pl-arrow{color:var(--teal);transform:translateX(4px);}
+
+/* ── What to Expect ── */
+.wte-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;}
+.wte-card{background:#f7f7f7;border-radius:14px;padding:28px;border:1px solid #ebebeb;transition:border-color 0.2s,box-shadow 0.2s;}
+.wte-card:hover{border-color:var(--teal);box-shadow:0 4px 20px rgba(0,197,205,0.08);}
+.wte-card--wide{grid-column:span 2;}
+.wte-icon-wrap{font-size:28px;margin-bottom:14px;line-height:1;}
+.wte-card-label{font-size:13px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.wte-card-body{font-size:14px;color:var(--subtle);line-height:1.75;}
+.wte-kids{display:flex;align-items:flex-start;gap:24px;background:var(--dark);border-radius:16px;padding:36px;margin-top:12px;}
+.wte-kids-icon{font-size:40px;flex-shrink:0;margin-top:4px;}
+.wte-kids-label{font-size:11px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.wte-kids-title{font-size:22px;font-weight:800;color:#fff;margin:0 0 12px;letter-spacing:-0.02em;}
+.wte-kids-body{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.8;margin:0;}
+
+/* ── FAQ ── */
+.faq-section{background:var(--bg-soft);padding:72px 0;}
+.faq-inner{max-width:760px;margin:0 auto;padding:0 52px;}
+.faq-section .section-title{color:#1a1a1a;}
+.faq-trigger{color:#1a1a1a;}
+.faq-icon{color:#888;}
+.faq-item{border-bottom:1px solid #e0e0e0;}
+.faq-item:first-of-type{border-top:1px solid #e0e0e0;}
+.faq-body p{color:var(--subtle);}
+.faq-item.open .faq-icon{color:var(--teal);}
+.faq-trigger:hover{color:var(--teal);}
+
+/* ── RSVP Form ── */
+.visit-form{background:var(--dark);padding:80px 0;}
+.vf-inner{max-width:1200px;margin:0 auto;padding:0 52px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.vf-title{font-size:clamp(32px,4.5vw,60px);font-weight:800;color:#fff;line-height:1.05;letter-spacing:-0.03em;margin-bottom:16px;}
+.vf-sub{font-size:15px;color:var(--body);line-height:1.7;margin-bottom:0;}
+.vf-sticky{position:sticky;top:96px;}
+.vf-form-panel{background:rgba(255,255,255,0.05);border-radius:16px;padding:36px;border:1px solid var(--border);}
+.vf-form-panel .field label{color:rgba(255,255,255,0.65);}
+.vf-form-panel .field input,
+.vf-form-panel .field textarea,
+.vf-form-panel .field select{background:rgba(0,0,0,0.2);border-color:rgba(255,255,255,0.12);color:#fff;}
+.vf-form-panel .field input::placeholder,
+.vf-form-panel .field textarea::placeholder{color:rgba(255,255,255,0.3);}
+.vf-form-panel .field input:focus,
+.vf-form-panel .field textarea:focus,
+.vf-form-panel .field select:focus{border-color:var(--teal);background:rgba(255,255,255,0.07);outline:none;}
+.vf-form-panel .field select option{background:#2a2a2a;color:#fff;}
+
+/* Confirmation */
+.form-confirmation{display:none;text-align:center;padding:48px 16px;}
+.form-confirmation-icon{font-size:56px;margin-bottom:16px;}
+.form-confirmation-title{font-size:26px;font-weight:800;color:#fff;margin-bottom:12px;}
+.form-confirmation-body{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.7;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .vw-inner{padding:0 32px;}
+  .vw-grid{grid-template-columns:1fr;gap:40px;padding-bottom:48px;}
+  .vw-video{max-width:560px;}
+  .visit-grid{grid-template-columns:1fr;}
+  .vg-sep{height:1px;width:100%;}
+  .vg-col{padding:24px 20px;}
+  .faq-inner{padding:0 32px;}
+  .vf-inner{grid-template-columns:1fr;padding:0 32px;gap:40px;}
+  .vf-sticky{position:static;}
+  .wte-grid{grid-template-columns:repeat(2,1fr);}
+  .wte-card--wide{grid-column:span 2;}
+}
+
+@media(max-width:768px){
+  .vw-inner{padding:0 20px;}
+  .visit-welcome{padding:48px 0 0;}
+  .vw-grid{gap:32px;padding-bottom:40px;}
+  .toggle-group{width:100%;display:flex;}
+  .tog-btn{flex:1;padding:12px 8px;font-size:11px;}
+  .faq-inner{padding:0 20px;}
+  .vf-inner{padding:0 20px;gap:32px;}
+  .vf-form-panel{padding:24px 20px;}
+  .wte-kids{flex-direction:column;gap:16px;padding:28px 24px;}
+  .wte-kids-icon{margin-top:0;}
+}
+
+@media(max-width:580px){
+  .wte-grid{grid-template-columns:1fr;}
+  .wte-card--wide{grid-column:span 1;}
+  .addr-row{gap:8px;}
+  .visit-form{padding:56px 0;}
+  .vg-col{padding:20px 16px;}
+  .svc-name{font-size:14px;}
+  .field-row{grid-template-columns:1fr!important;}
+  .container{padding-left:20px!important;padding-right:20px!important;}
+}
+
+@media(max-width:400px){
+  .vw-title{font-size:28px;}
+  .vf-title{font-size:28px;}
+  .vg-heading{font-size:22px;}
+}
+
+/* ── Global form fields (shared) ── */
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
+.field input,
+.field textarea,
+.field select{width:100%;padding:12px 14px;border:1px solid var(--border-mid);border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;color:var(--ink);background:#fff;transition:border-color 0.2s,box-shadow 0.2s;-webkit-appearance:none;appearance:none;}
+.field input:focus,
+.field textarea:focus,
+.field select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,197,205,0.1);outline:none;}
+.field textarea{resize:vertical;min-height:90px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+</style>
+</head>
+<body>
+<script src="header.js"></script>
+
+<!-- ══ HERO / WELCOME ══ -->
+<div class="page-masthead">
+  <div class="container">
+    <span class="eyebrow">We'd Love to See You</span>
+    <h1>Plan a Visit</h1>
+    <p>Whether faith is new, familiar, or something you're finding again — there is a place for you here. We can't wait to meet you.</p>
+  </div>
+</div>
+
+<!-- ══ WELCOME MESSAGE + VIDEO ══ -->
+<section class="visit-welcome">
+  <div class="vw-inner">
+    <div class="vw-grid">
+      <div class="vw-text">
+        <span class="eyebrow">A Word from Our Pastor</span>
+        <h2 class="vw-title">You're Expected,<br/>Not Just Welcome.</h2>
+        <p class="vw-body">At ICANJ, every first-time guest is a gift. We believe God didn't bring you here by accident — and our whole team is ready to make sure you feel it from the moment you walk through our doors. Come as you are. You belong here.</p>
+      </div>
+      <div class="vw-video">
+        <div class="vw-video-placeholder">
+          <button class="vw-play" aria-label="Play welcome video">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="vw-video-label">Pastor's Welcome Message</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICE TIMES + LOCATION ══ -->
+<section class="section" style="background:var(--bg-soft);">
+  <div class="container">
+    <div style="margin-bottom:8px;"><span class="eyebrow">How are you joining us?</span></div>
+    <div class="toggle-group">
+      <button class="tog-btn active" onclick="switchPanel('in-person',this)">In Person</button>
+      <button class="tog-btn" onclick="switchPanel('online',this)">Online</button>
+    </div>
+
+    <div id="in-person" class="visit-panel active">
+      <div class="visit-grid">
+        <!-- Service Times -->
+        <div class="vg-col">
+          <div class="vg-label">Service Times</div>
+          <div class="vg-heading">Join Us This Sunday</div>
+          <div class="svc-row">
+            <span class="svc-name">Morning Worship (English)</span>
+            <span class="svc-time">10:00 AM</span>
+          </div>
+          <div class="svc-row">
+            <span class="svc-name">Malayalam Service</span>
+            <span class="svc-time">12:30 PM</span>
+          </div>
+          <div class="svc-row">
+            <span class="svc-name">Wednesday Bible Study</span>
+            <span class="svc-time">7:30 PM</span>
+          </div>
+          <div class="svc-row">
+            <span class="svc-name">Friday Youth Fellowship</span>
+            <span class="svc-time">7:00 PM</span>
+          </div>
+        </div>
+        <div class="vg-sep"></div>
+        <!-- Location -->
+        <div class="vg-col">
+          <div class="vg-label">Location</div>
+          <div class="vg-heading">Find Us</div>
+          <div class="map-placeholder">
+            <iframe
+              loading="lazy"
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&q=315+State+St,Hackensack,NJ"
+              allowfullscreen
+              title="Church location map">
+            </iframe>
+          </div>
+          <div class="addr-row">
+            <div class="addr-label">315 State St, Hackensack, NJ</div>
+            <button class="copy-btn" onclick="copyAddr(this)">Copy Address</button>
+          </div>
+          <a href="https://maps.google.com/?q=315+State+St+Hackensack+NJ" target="_blank" class="btn btn-primary btn-arrow" style="margin-top:12px;display:inline-flex;">Get Directions</a>
+        </div>
+        <div class="vg-sep"></div>
+        <!-- Kids Ministry -->
+        <div class="vg-col">
+          <div class="vg-label">Children's Ministry</div>
+          <div class="vg-heading">Kids Are Welcome</div>
+          <p style="font-size:14px;color:var(--subtle);line-height:1.75;margin-bottom:14px;">Safe, age-appropriate environments where kids genuinely encounter Jesus. Runs during the 10:00 AM English service for all ages. Check in at the Kids Ministry desk in the main foyer.</p>
+          <a href="ministries.html" class="btn btn-outline-dark">Learn More</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="online" class="visit-panel">
+      <div class="visit-grid">
+        <div class="vg-col">
+          <div class="vg-label">Live Stream</div>
+          <div class="vg-heading">10:00 · 12:30</div>
+          <div class="vg-label" style="margin-bottom:8px;">On demand — uploaded same day</div>
+          <div class="platform-list">
+            <a href="https://www.youtube.com/@ICANJ" target="_blank" class="platform-row"><span class="pl-name">YouTube — @ICANJ</span><span class="pl-arrow">→</span></a>
+            <a href="https://open.spotify.com/show/79ZreA0Kmp0KERqYSTQJQE" target="_blank" class="platform-row"><span class="pl-name">Spotify Podcast</span><span class="pl-arrow">→</span></a>
+            <a href="https://podcasts.apple.com/us/podcast/walking-through-the-word-verse-by-verse-in-depth-bible-study/id1726749438" target="_blank" class="platform-row"><span class="pl-name">Apple Podcasts</span><span class="pl-arrow">→</span></a>
+          </div>
+        </div>
+        <div class="vg-sep"></div>
+        <div class="vg-col" style="grid-column:span 3;">
+          <div class="vg-label">About Online</div>
+          <p style="font-size:15px;color:var(--subtle);line-height:1.75;margin-bottom:20px;max-width:560px;"><strong>Whether you're on a break at work, in the middle of a long shift, or gathered at home — you are seen, known, and loved.</strong> We pray for our online community intentionally. This is your home — to be formed by the Word, covered in prayer, and sent to live on mission.</p>
+          <a href="https://icanj.churchcenter.com/home" target="_blank" class="btn btn-dark btn-arrow">Join Church Center</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHAT TO EXPECT ══ -->
+<section style="background:#fff;padding:80px 0;">
+  <div class="container">
+    <span class="eyebrow">What to Expect</span>
+    <h2 class="section-title" style="color:#1a1a1a;margin-bottom:8px;">Your First Sunday</h2>
+    <p style="font-size:16px;color:#666;max-width:560px;line-height:1.7;margin-bottom:48px;">Here's everything you need to feel at home before you even walk through the door.</p>
+
+    <div class="wte-grid">
+      <div class="wte-card">
+        <div class="wte-icon-wrap">🅿️</div>
+        <div class="wte-card-label">Parking</div>
+        <div class="wte-card-body">Free parking is available in the lot adjacent to the building. Street parking is also available on State St and nearby side streets. Our parking volunteers are on-site before each service to help you find a spot.</div>
+      </div>
+      <div class="wte-card">
+        <div class="wte-icon-wrap">👗</div>
+        <div class="wte-card-label">What to Wear</div>
+        <div class="wte-card-body">Come as you are! No dress code here. Some people dress up, others keep it casual — what matters is that you're here. You'll see everything from jeans to Sunday best.</div>
+      </div>
+      <div class="wte-card">
+        <div class="wte-icon-wrap">🙌</div>
+        <div class="wte-card-label">Service Style</div>
+        <div class="wte-card-body">Our Sunday gatherings blend heartfelt worship with Spirit-filled preaching. Expect a warm, participatory atmosphere — the presence of God is central to everything we do.</div>
+      </div>
+      <div class="wte-card">
+        <div class="wte-icon-wrap">⏱</div>
+        <div class="wte-card-label">Service Length</div>
+        <div class="wte-card-body">About 1.5 hours.</div>
+      </div>
+      <div class="wte-card">
+        <div class="wte-icon-wrap">🎵</div>
+        <div class="wte-card-label">Worship Style</div>
+        <div class="wte-card-body">A mix of contemporary praise and traditional hymns — music that moves both the heart and the spirit.</div>
+      </div>
+      <div class="wte-card wte-card--wide">
+        <div class="wte-icon-wrap">📖</div>
+        <div class="wte-card-label">Preaching Style</div>
+        <div class="wte-card-body">Practical, Bible-based messages rooted in the Word of God. Relatable, encouraging, and designed to speak to real life. Bring your Bible — or follow along on your phone.</div>
+      </div>
+    </div>
+
+    <div class="wte-kids">
+      <div class="wte-kids-icon">👦</div>
+      <div class="wte-kids-content">
+        <div class="wte-kids-label">Kids Ministry</div>
+        <h3 class="wte-kids-title">Your Kids Are in Good Hands</h3>
+        <p class="wte-kids-body">We have a full Kids Ministry running during Sunday service so your children can learn about Jesus in a fun, age-appropriate, and safe environment. Kids are checked in before service and will have their own worship, teaching, and activities tailored just for them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LET US KNOW YOU'RE COMING ══ -->
+<div class="visit-form" id="rsvp">
+  <div class="vf-inner">
+    <div class="vf-sticky">
+      <div class="eyebrow" style="color:rgba(0,197,205,0.9);margin-bottom:16px;display:block;">Let Us Know You're Coming</div>
+      <div class="vf-title">We're excited<br/>to host you.</div>
+      <p class="vf-sub" style="margin-top:16px;">Share your visit plans so our welcome team can be ready to greet you from the moment you arrive.</p>
+      <div style="margin-top:36px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;align-items:flex-start;gap:14px;">
+          <span style="font-size:22px;flex-shrink:0;">👋</span>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.9);margin-bottom:4px;">Personal Greeting</div>
+            <div style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.6;">Our team will look out for you and introduce themselves after service.</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:14px;">
+          <span style="font-size:22px;flex-shrink:0;">🎁</span>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.9);margin-bottom:4px;">Welcome Gift</div>
+            <div style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.6;">First-time guests receive a special welcome packet from us.</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:14px;">
+          <span style="font-size:22px;flex-shrink:0;">❓</span>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.9);margin-bottom:4px;">Questions Answered</div>
+            <div style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.6;">Have questions before you arrive? Drop them in the form — we'll be in touch.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vf-form-panel" id="visitFormWrap">
+      <form id="visitForm" onsubmit="submitVisitForm(event)" novalidate>
+        <div class="field-row">
+          <div class="field">
+            <label for="firstName">First Name *</label>
+            <input type="text" id="firstName" name="firstName" placeholder="First name" required autocomplete="given-name"/>
+          </div>
+          <div class="field">
+            <label for="lastName">Last Name *</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Last name" required autocomplete="family-name"/>
+          </div>
+        </div>
+        <div class="field">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email"/>
+        </div>
+        <div class="field">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="(123) 456-7890" autocomplete="tel"/>
+        </div>
+        <div class="field">
+          <label for="visitDate">Expected Visit Date *</label>
+          <input type="date" id="visitDate" name="visitDate" required/>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="adults">Number of Adults *</label>
+            <input type="number" id="adults" name="adults" min="1" value="1" required/>
+          </div>
+          <div class="field">
+            <label for="children">Number of Children</label>
+            <input type="number" id="children" name="children" min="0" value="0"/>
+          </div>
+        </div>
+        <div class="field">
+          <label for="hearAbout">How did you hear about us? (optional)</label>
+          <select id="hearAbout" name="hearAbout">
+            <option value="">Select…</option>
+            <option>Friend or Family</option>
+            <option>Facebook</option>
+            <option>Instagram</option>
+            <option>YouTube</option>
+            <option>Google Search</option>
+            <option>Drove by the church</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="notes">Any questions or notes? (optional)</label>
+          <textarea id="notes" name="notes" placeholder="We'd love to hear from you…" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-arrow" style="width:100%;justify-content:center;padding:15px 24px;font-size:14px;">Send My Visit Card</button>
+        <p id="formError" style="display:none;color:#ff6b6b;font-size:13px;margin-top:12px;text-align:center;"></p>
+      </form>
+      <div class="form-confirmation" id="formConfirmation">
+        <div class="form-confirmation-icon">🙌</div>
+        <div class="form-confirmation-title">Thanks! We'll be looking out for you.</div>
+        <p class="form-confirmation-body">Our welcome team has received your visit card and is excited to meet you. See you Sunday!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function submitVisitForm(e) {
+  e.preventDefault();
+  var form = e.target;
+  var errorEl = document.getElementById('formError');
+  errorEl.style.display = 'none';
+
+  // Validate required fields
+  var firstName = form.firstName.value.trim();
+  var lastName  = form.lastName.value.trim();
+  var email     = form.email.value.trim();
+  var visitDate = form.visitDate.value;
+  var adults    = form.adults.value;
+
+  if (!firstName || !lastName || !email || !visitDate || !adults) {
+    errorEl.textContent = 'Please fill in all required fields.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  // Build email body
+  var fields = {
+    'First Name':    firstName,
+    'Last Name':     lastName,
+    'Email':         email,
+    'Phone':         form.phone.value.trim() || '—',
+    'Visit Date':    visitDate,
+    'Adults':        adults,
+    'Children':      form.children.value || '0',
+    'Heard About Us':form.hearAbout.value || '—',
+    'Notes':         form.notes.value.trim() || '—'
+  };
+
+  var body = Object.entries(fields).map(function(e){ return e[0]+': '+e[1]; }).join('\n');
+  var subject = encodeURIComponent('Visit RSVP – ' + firstName + ' ' + lastName + ' on ' + visitDate);
+  var bodyEnc = encodeURIComponent(body);
+
+  var link = document.createElement('a');
+  link.href = 'mailto:welcome@icanj.org?subject=' + subject + '&body=' + bodyEnc;
+  link.style.display = 'none';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  form.style.display = 'none';
+  document.getElementById('formConfirmation').style.display = 'block';
+}
+
+function switchPanel(id, btn) {
+  document.querySelectorAll('.visit-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.tog-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function copyAddr(btn) {
+  navigator.clipboard.writeText('315 State St, Hackensack, NJ').then(function(){
+    btn.textContent = '✓ Copied';
+    setTimeout(function(){ btn.textContent = 'Copy Address'; }, 2000);
+  });
+}
+
+// Set min date for visit date picker to today
+(function(){
+  var d = document.getElementById('visitDate');
+  if (d) {
+    var today = new Date();
+    var yyyy = today.getFullYear();
+    var mm = String(today.getMonth()+1).padStart(2,'0');
+    var dd = String(today.getDate()).padStart(2,'0');
+    d.min = yyyy+'-'+mm+'-'+dd;
+  }
+})();
+</script>
+
+<script src="footer.js"></script>
+<script src="color-manager-widget.js"></script>
+</body>
+</html>
