@@ -19,45 +19,27 @@
 .hero-scroll span{font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.2);}
 
 /* WELCOME SECTION */
-.welcome-section{background:var(--bg-white);padding:100px 0;position:relative;overflow:hidden;}
+.welcome-section{background:var(--bg-white);padding:100px 0 0;position:relative;overflow:hidden;}
 .welcome-section::before{content:'';position:absolute;top:-100px;right:-80px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(0,197,205,0.07) 0%,transparent 70%);pointer-events:none;}
 .welcome-section::after{content:'';position:absolute;bottom:-60px;left:10%;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(0,197,205,0.04) 0%,transparent 70%);pointer-events:none;}
-.welcome-inner{max-width:1200px;margin:0 auto;padding:0 52px;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;position:relative;z-index:1;}
-.welcome-text-col{}
+.welcome-inner{max-width:1200px;margin:0 auto;padding:0 52px 60px;text-align:center;position:relative;z-index:1;}
 .welcome-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:800;letter-spacing:0.28em;text-transform:uppercase;color:var(--teal);margin-bottom:16px;}
 .welcome-eyebrow::before{content:'';width:20px;height:2px;background:var(--teal);flex-shrink:0;}
 .welcome-heading{font-size:clamp(34px,4.5vw,58px);font-weight:900;color:var(--ink);line-height:1.04;letter-spacing:-0.03em;margin-bottom:18px;}
 .welcome-heading em{font-style:normal;color:var(--teal);}
-.welcome-body{font-size:16px;color:var(--subtle);line-height:1.85;margin-bottom:36px;max-width:420px;}
-.welcome-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-bottom:36px;border:1.5px solid var(--border-light);border-radius:14px;overflow:hidden;}
-.wstat{display:flex;flex-direction:column;padding:16px 20px;border-right:1.5px solid var(--border-light);}
-.wstat:last-child{border-right:none;}
-.wstat-num{font-size:clamp(16px,2.5vw,26px);font-weight:900;color:var(--ink);letter-spacing:-0.02em;line-height:1;}
-.wstat-num em{font-style:normal;color:var(--teal);}
-.wstat-label{font-size:10px;font-weight:600;color:var(--faint);margin-top:4px;letter-spacing:0.04em;}
-.welcome-right-col{}
-.times-card{background:#fff;border-radius:24px;border:1.5px solid var(--border);box-shadow:0 8px 40px rgba(0,0,0,0.07);overflow:hidden;}
-.times-card-header{background:linear-gradient(135deg,var(--teal),var(--teal-dark));padding:22px 28px;display:flex;align-items:center;gap:12px;}
-.times-card-icon{width:36px;height:36px;background:rgba(255,255,255,0.18);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.times-card-icon svg{width:18px;height:18px;fill:#fff;}
-.times-card-title{font-size:12px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#fff;}
-.times-card-sub{font-size:11px;color:rgba(255,255,255,0.72);margin-top:1px;}
-.times-list{display:flex;flex-direction:column;}
-.time-row{display:flex;align-items:center;gap:14px;padding:16px 28px;border-bottom:1px solid var(--border-light);transition:background 0.2s;}
-.time-row:last-child{border-bottom:none;}
-.time-row:hover{background:#f8fffe;}
-.time-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.time-icon svg{width:16px;height:16px;}
-.ti-sun{background:rgba(0,197,205,0.1);}.ti-sun svg{fill:var(--teal);}
-.ti-book{background:rgba(99,102,241,0.1);}.ti-book svg{fill:#6366f1;}
-.ti-fire{background:rgba(249,115,22,0.1);}.ti-fire svg{fill:#f97316;}
-.time-info{flex:1;}
-.time-row-name{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:2px;}
-.time-row-hour{font-size:12px;font-weight:700;color:var(--teal);letter-spacing:0.03em;}
-.time-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;font-size:9px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;flex-shrink:0;}
-.tb-live{background:rgba(239,68,68,0.08);color:#ef4444;border:1px solid rgba(239,68,68,0.18);}
-.tb-live::before{content:'';width:5px;height:5px;border-radius:50%;background:#ef4444;flex-shrink:0;}
-.tb-live:hover{background:#ef4444;color:#fff;}
+.welcome-body{font-size:16px;color:var(--subtle);line-height:1.85;max-width:520px;margin:0 auto;}
+
+/* SERVICE STRIP */
+.service-strip{background:var(--bg-white);padding:0 52px 80px;position:relative;z-index:1;}
+.ss-inner{max-width:1200px;margin:0 auto;background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:32px 40px;display:flex;align-items:center;justify-content:space-between;gap:32px;}
+.ss-content{display:flex;flex-direction:column;gap:4px;}
+.ss-label{font-size:11px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--faint);}
+.ss-time{font-size:36px;font-weight:900;color:var(--teal);line-height:1;letter-spacing:-0.02em;}
+.ss-address{font-size:15px;color:var(--ink);line-height:1.4;font-weight:600;}
+.ss-divider{width:1px;height:48px;background:var(--border);flex-shrink:0;}
+.ss-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--teal);color:#fff;font-size:13px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;border-radius:12px;text-decoration:none;transition:all 0.2s;flex-shrink:0;}
+.ss-cta svg{width:16px;height:16px;fill:currentColor;}
+.ss-cta:hover{background:var(--teal-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,197,205,0.3);}
 
 /* SOCIAL — 3D Carousel */
 /* Social section uses global CSS vars + these social-specific vars: */
@@ -131,16 +113,19 @@
   .hero{min-height:auto;padding:100px 0 80px;}
   .hero-scroll{display:none;}
   .welcome-inner{grid-template-columns:1fr;padding:0 24px;gap:48px;}
+  .service-panel{padding:36px 28px;}
 }
 @media(max-width:600px){
   .welcome-section{padding:64px 0;}
   .welcome-inner{padding:0 20px;}
-  .times-card-header{padding:18px 20px;}
-  .time-row{padding:14px 20px;}
+  .service-panel{padding:32px 24px;}
+  .sp-time{font-size:40px;}
 }
 @media(max-width:480px){
   .hero h1{font-size:36px;}
   .welcome-section{padding:56px 0;}
+  .sp-title{font-size:26px;}
+  .sp-time{font-size:36px;}
 }
 </style>
 </head>
@@ -165,64 +150,25 @@
 <!-- ══ WELCOME MESSAGE ══ -->
 <section class="welcome-section">
   <div class="welcome-inner">
-    <div class="welcome-text-col">
+    <h2 class="welcome-heading">Welcome to<br><em>ICANJ Church</em></h2>
+    <p class="welcome-body">Whether faith is new, familiar, or something you're finding again — there is a place for you here. Come as you are.</p>
+  </div>
   
-      <h2 class="welcome-heading">Welcome to<br><em>ICANJ Church</em></h2>
-      <p class="welcome-body">Whether faith is new, familiar, or something you're finding again — there is a place for you here. Come as you are.</p>
-
-    </div>
-    <div class="welcome-right-col">
-      <div class="times-card">
-        <div class="times-card-header">
-          <div class="times-card-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
-          </div>
-          <div>
-            <div class="times-card-title">Service Times</div>
-            <div class="times-card-sub">Hackensack, New Jersey</div>
-          </div>
-        </div>
-        <div class="times-list">
-          <div class="time-row">
-            <div class="time-icon ti-sun">
-              <svg viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10A5 5 0 0012 7zm0 8a3 3 0 110-6 3 3 0 010 6zm-1-11V2h2v2h-2zm0 18v-2h2v2h-2zm9-9h2v2h-2v-2zm-18 0H2v-2h2v2zM5.64 4.22l1.42 1.42-1.42 1.41L4.22 5.64l1.42-1.42zm12.72 12.72l1.42 1.42-1.42 1.41-1.41-1.41 1.41-1.42zm0-12.72L19.78 5.64l-1.42 1.42-1.41-1.42 1.41-1.42zM5.64 18.36l1.42-1.42 1.41 1.42-1.41 1.41-1.42-1.41z"/></svg>
-            </div>
-            <div class="time-info">
-              <div class="time-row-name">Morning Worship (English)</div>
-              <div class="time-row-hour">Sunday · 10:00 AM</div>
-            </div>
-            <a href="sermons.html#watch-live" class="time-badge tb-live">Live</a>
-          </div>
-          <div class="time-row">
-            <div class="time-icon ti-sun">
-              <svg viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10A5 5 0 0012 7zm0 8a3 3 0 110-6 3 3 0 010 6zm-1-11V2h2v2h-2zm0 18v-2h2v2h-2zm9-9h2v2h-2v-2zm-18 0H2v-2h2v2zM5.64 4.22l1.42 1.42-1.42 1.41L4.22 5.64l1.42-1.42zm12.72 12.72l1.42 1.42-1.42 1.41-1.41-1.41 1.41-1.42zm0-12.72L19.78 5.64l-1.42 1.42-1.41-1.42 1.41-1.42zM5.64 18.36l1.42-1.42 1.41 1.42-1.41 1.41-1.42-1.41z"/></svg>
-            </div>
-            <div class="time-info">
-              <div class="time-row-name">Malayalam Service</div>
-              <div class="time-row-hour">Sunday · 12:30 PM</div>
-            </div>
-            <a href="sermons.html#watch-live" class="time-badge tb-live">Live</a>
-          </div>
-          <div class="time-row">
-            <div class="time-icon ti-book">
-              <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </div>
-            <div class="time-info">
-              <div class="time-row-name">Wednesday Bible Study</div>
-              <div class="time-row-hour">Wednesday · 7:30 PM</div>
-            </div>
-          </div>
-          <div class="time-row">
-            <div class="time-icon ti-fire">
-              <svg viewBox="0 0 24 24"><path d="M12 2c0 6-6 7-6 13a6 6 0 0012 0c0-6-6-7-6-13zm0 17a2 2 0 01-2-2c0-2 2-3 2-5 0 2 2 3 2 5a2 2 0 01-2 2z"/></svg>
-            </div>
-            <div class="time-info">
-              <div class="time-row-name">Friday Youth Fellowship</div>
-              <div class="time-row-hour">Friday · 7:00 PM</div>
-            </div>
-          </div>
-        </div>
+  <div class="service-strip">
+    <div class="ss-inner">
+      <div class="ss-content">
+        <div class="ss-label">Sunday Service</div>
+        <div class="ss-time">10 AM</div>
       </div>
+      <div class="ss-divider"></div>
+      <div class="ss-content">
+        <div class="ss-label">Location</div>
+        <div class="ss-address">315 State St, Hackensack, NJ 07601</div>
+      </div>
+      <a href="https://maps.google.com/?q=315+State+St+Hackensack+NJ+07601" target="_blank" class="ss-cta">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+        Get Directions
+      </a>
     </div>
   </div>
 </section>
